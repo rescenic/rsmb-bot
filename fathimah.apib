@@ -1,0 +1,1017 @@
+FORMAT: 1A
+HOST: https://api.banghasan.com/
+
+# API Fathimah Bot
+
+## Pengumuman
+
+> **API telah tersedia di versi baru!**
+
+
+### API BARU
+
+Buka API dokumentasi baru di: [API myQURAN](http://bit.ly/api-v1-myquran) di http://bit.ly/api-v1-myquran
+
+> Fitur [API myQURAN](http://bit.ly/api-v1-myquran)  jadwal sholat sudah sesuai dengan Kemenag RI.
+
+## Dokumentasi
+
+Terakhir diupdate: `20 Agustus 2018`
+<hr />
+
+Dokumentasi dan referensi API Fathimah. Memuat segala informasi dari engine utama `@FathimahBot` di Telegram.
+Diizinkan mengakses dan memanfaatkannya.
+
+Poin Akses API : `https://api.banghasan.com/`
+
+Jika ada saran dan masukan dapat melalui :
+
+1. Telegram `@hasanudinhs` -- 
+*fast respon*
+2. Email `banghasan@gmail.com`
+3. Grup diskusi bot telegram `@botindonesia` di Telegram
+
+
+## Group alQuran
+API terkait dengan fungsi-fungsi alQuran
+
+
+## Seluruh Surat [/quran/format/{tipe}/surat]
+Mendapatkan seluruh informasi dan daftar surat, default format adalah `array`. Pilihan output lainnya adalah `json`.
+
+URL: `/quran/format/{tipe}/surat`
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    
+#### /quran/surat [GET]
+Contoh: `https://api.banghasan.com/quran/format/json/surat`
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": {
+            "format": "json",
+            "surat": "semua"
+          },
+          "hasil": [
+            {
+              "nomor": "1",
+              "nama": "Al Fatihah",
+              "asma": "الفاتحة",
+              "name": "Al-Faatiha",
+              "start": "0",
+              "ayat": "7",
+              "type": "mekah",
+              "urut": "5",
+              "rukuk": "1"
+            },
+            {
+              "nomor": "2",
+              "nama": "Al Baqarah",
+              "asma": "البقرة",
+              "name": "Al-Baqara",
+              "start": "7",
+              "ayat": "286",
+              "type": "madinah",
+              "urut": "87",
+              "rukuk": "40"
+            },
+            ... dst
+          ]
+        } 
+
+
+## Nomor Surat [/quran/format/{tipe}/surat/{surat}]
+Mendapatkan informasi surat alQuran tertentu berdasarkan nomor surat.
+
+URL: `/quran/format/{tipe}/surat/{nomorsurat}`
++ Parameters
+    + surat (number) - nomor surat, valid 1 sampai dengan 114
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/surat/{surat} [GET]
+Untuk menampilkan info surat kelima, al Maidah.
+
+1. Contoh: 
+
+        https://api.banghasan.com/quran/format/json/surat/5
+2. Preformat
+
+        https://api.banghasan.com/quran/format/json/surat/5/pre
+
+
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": {
+            "format": "json",
+            "surat": "1"
+          },
+          "hasil": [
+            {
+              "nomor": "1",
+              "nama": "Al Fatihah",
+              "asma": "الفاتحة",
+              "name": "Al-Faatiha",
+              "start": "0",
+              "ayat": "7",
+              "type": "mekah",
+              "urut": "5",
+              "rukuk": "1"
+            }
+          ]
+        }
+
+
+
+## Tampil Ayat [/quran/format/{tipe}/surat/{surat}/ayat/{ayat}]
+Berfungsi menampilkan ayat alQuran dengan default bahasa adalah ar, idt, dan id.
+
+URL: `/quran/format/{tipe}/surat/{nomorsurat}/ayat/{nomorayat}`
++ Parameters
+    + surat (number) - nomor surat, valid 1 sampai dengan 114 
+    + ayat (number) - nomor ayat 
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/surat/ayat/ [GET]
+Beberapa variasi penulisan nomor ayat :
+
+1. ayat satuan 
+
+        https://api.banghasan.com/quran/format/json/surat/1/ayat/1
+
+2. ayat range
+
+        https://api.banghasan.com/quran/format/json/surat/1/ayat/1-5
+
+3. ayat pilihan 
+
+        https://api.banghasan.com/quran/format/json/surat/1/ayat/1,3,5
+
+4. PreFormat
+
+        https://api.banghasan.com/quran/format/json/surat/1/ayat/1,3,5/pre
+
+Maksimal jangkuan dibatasi 10 ayat 
+
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": {
+            "format": "json",
+            "bahasa": "",
+            "bahasa2": [
+              "ar",
+              "idt",
+              "id"
+            ],
+            "surat": "1",
+            "ayat": "2",
+            "ayat2": [
+              2
+            ]
+          },
+          "bahasa": {
+            "proses": [
+              "ar",
+              "idt",
+              "id"
+            ],
+            "keterangan": [
+              "arabic",
+              "indonesia transliterasi",
+              "indonesia"
+            ]
+          },
+          "surat": {
+            "nomor": "1",
+            "nama": "Al Fatihah",
+            "asma": "الفاتحة",
+            "name": "Al-Faatiha",
+            "start": "0",
+            "ayat": "7",
+            "type": "mekah",
+            "urut": "5",
+            "rukuk": "1"
+          },
+          "ayat": {
+            "proses": [
+              2
+            ],
+            "data": {
+              "ar": [
+                {
+                  "id": "ar",
+                  "surat": "1",
+                  "ayat": "2",
+                  "teks": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"
+                }
+              ],
+              "idt": [
+                {
+                  "id": "idt",
+                  "surat": "1",
+                  "ayat": "2",
+                  "teks": "al<u>h</u>amdu lill<u>aa</u>hi rabbi <strong>a</strong>l'<u>aa</u>lamiin<strong>a</        strong><br>"
+                }
+              ],
+              "id": [
+                {
+                  "id": "id",
+                  "surat": "1",
+                  "ayat": "2",
+                  "teks": "Segala puji {2} bagi Allah, Tuhan semesta alam. {3}\n"
+                }
+              ]
+            }
+          }
+        }
+
+## Bahasa Ayat  [/quran/format/{tipe}/surat/{surat}/ayat/{ayat}/bahasa/{bahasa}]
+Berfungsi menampilkan ayat alQuran dengan memilih bahasa tertentu.
+
+URL: `/quran/format/{tipe}/surat/{nomorsurat}/ayat/{nomorayat}/bahasa/{idbahasa}`
++ Parameters
+    + surat (number) - nomor surat, valid 1 sampai dengan 114 
+    + ayat (number) - nomor ayat 
+    + bahasa (string) - kode bahasa, bisa multi bahasa 
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/surat/ayat/bahasa [GET]
+
+*Bahasa* bisa multi, default adalah ar (arabic) dan id (indonesia) indonesia.
+Misal:
+
+bahasa: `ar,idt,id` (default)
+
+1. Contoh: `ar,id`
+
+        https://api.banghasan.com/quran/format/json/surat/3/ayat/190-193/bahasa/ar,id
+
+2. Preformat
+
+        https://api.banghasan.com/format/json/surat/3/ayat/190-193/bahasa/ar,id/pre
+
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": {
+            "format": "json",
+            "bahasa": "id",
+            "bahasa2": [
+              "id"
+            ],
+            "surat": "1",
+            "ayat": "2,3",
+            "ayat2": [
+              2,
+              3
+            ]
+          },
+          "bahasa": {
+            "proses": [
+              "id"
+            ],
+            "keterangan": [
+              "indonesia"
+            ]
+          },
+          "surat": {
+            "nomor": "1",
+            "nama": "Al Fatihah",
+            "asma": "الفاتحة",
+            "name": "Al-Faatiha",
+            "start": "0",
+            "ayat": "7",
+            "type": "mekah",
+            "urut": "5",
+            "rukuk": "1"
+          },
+          "ayat": {
+            "proses": [
+              2,
+              3
+            ],
+            "data": {
+              "id": [
+                {
+                  "id": "id",
+                  "surat": "1",
+                  "ayat": "2",
+                  "teks": "Segala puji {2} bagi Allah, Tuhan semesta alam. {3}\n"
+                },
+                {
+                  "id": "id",
+                  "surat": "1",
+                  "ayat": "3",
+                  "teks": "Maha Pemurah lagi Maha Penyayang.\n"
+                }
+              ]
+            }
+          }
+        }
+
+## Daftar Bahasa  [/quran/format/{tipe}/bahasa]
+Menampilkan daftar bahasa yang disediakan untuk modul ini: baik alQuran (arabic), transliterasi, maupun terjemahan dalam berbagai bahasa.
+
+Bahasa akan ditambah, sekarang masih di develop jadi hanya beberapa bahasa saja.
+
+URL: `/quran/format/{tipe}/bahasa`
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/bahasa [GET]
+Contoh: `https://api.banghasan.com/quran/format/json/bahasa`
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": "",
+          "bahasa": {
+            "jml": 9,
+            "data": {
+              "al": "albenian",
+              "ar": "arabic",
+              "az": "azerbaijani",
+              "en": "english",
+              "tl": "english transliteration",
+              "fr": "french",
+              "de": "germany",
+              "id": "indonesia",
+              "idt": "indonesia transliterasi"
+              ...
+              dst
+            }
+          }
+        }
+
+## Pre-Format  [/quran/format/{tipe}/surat/{surat}/ayat/{ayat}/bahasa/{bahasa}/pre]
+Berfungsi untuk men *debug* lewat browser secara langsung dengan tampilan `preformat`
+
+URL: `/quran/format/{tipe}/surat/{nomorsurat}/ayat/{nomorayat}/bahasa/{idbahasa}/pre`
++ Parameters
+    + surat (number) - nomor surat, valid 1 sampai dengan 114 
+    + ayat (number) - nomor ayat 
+    + bahasa (string) - kode bahasa, bisa multi bahasa 
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/surat/ayat/bahasa/pre [GET]
+
+Contoh:
+`https://api.banghasan.com/quran/format/array/surat/114/ayat/1,3,7/bahasa/ar,id/pre`
+
+
++ Response 200 (application/json)
+
+
+## Pencarian  [/quran/format/{tipe}/cari/{kata}/bahasa/{bahasa}/mulai/{mulai}/limit/{limit}]
+Pencarian Quran dalam berbagai bahasa pilihan. 
+
+URL: `/quran/format/{tipe}/cari/{kata}/bahasa/{bahasa}/mulai/{mulai}/limit/{limit}`
++ Parameters
+    + kata (string) - kata atau kalimat 
+    + mulai (number) - data ke berapa dimulai pencarian, 0 adalah data pertama 
+    + limit (number) - banyak data yang akan ditampilkan, max 100
+    + bahasa (string) - kode bahasa, bisa multi bahasa 
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/cari/bahasa [GET]
+
+`mulai` secara default dari `0`
+
+`limit` dibatasi maksimal `100`, default adalah `10`
+
+Karakter khusus yang diizinkan: `. , ( )`
+
+Operator pencarian : `+ - ~ *`
+
+*Tips* Gunakan url encode untuk pencarian kata kunci
+
+Berbagai Contoh :
+
+1. Simple
+
+        https://api.banghasan.com/quran/format/json/cari/segala%20puji
+2. Operator 
+
+        https://api.banghasan.com/quran/format/json/cari/segala%20%2bpuji
+3. Bahasa 
+
+        https://api.banghasan.com/quran/format/json/cari/good%20%2bnight/bahasa/en/mulai/0/limit/10
+4. Preformat:
+
+        https://api.banghasan.com/quran/format/json/cari/segala%20puji/bahasa/id/mulai/0/limit/50/pre
+
+
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "query": {
+            "format": "json",
+            "mulai": 0,
+            "limit": 10,
+            "bahasa": "en",
+            "bahasa2": [
+              "en"
+            ],
+            "cari": "good +night"
+          },
+          "bahasa": {
+            "proses": [
+              "en"
+            ],
+            "keterangan": [
+              "english"
+            ]
+          },
+          "cari": {
+            "proses": "good +night",
+            "en": {
+              "jml": "93",
+              "data": [
+                {
+                  "surat": "2",
+                  "ayat": "164"
+                },
+                {
+                  "surat": "2",
+                  "ayat": "187"
+                },
+                {
+                  "surat": "2",
+                  "ayat": "274"
+                },
+                {
+                  "surat": "3",
+                  "ayat": "27"
+                },
+                {
+                  "surat": "3",
+                  "ayat": "113"
+                },
+                {
+                  "surat": "3",
+                  "ayat": "190"
+                },
+                {
+                  "surat": "4",
+                  "ayat": "81"
+                },
+                {
+                  "surat": "4",
+                  "ayat": "108"
+                },
+                {
+                  "surat": "6",
+                  "ayat": "13"
+                },
+                {
+                  "surat": "6",
+                  "ayat": "60"
+                }
+              ]
+            }
+          }
+        }
+
+
+## Catatan Depag  [/quran/format/{tipe}/catatan/{nomor}]
+Pencarian Quran dalam berbagai bahasa pilihan. 
+
+URL: `/quran/format/{tipe}/catatan/{nomor}`
++ Parameters
+    + nomor (number) - nomor catatan dimulai 1 dan maksimal 1610 
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+
+#### /quran/catatan [GET]
+`nomor` dimulai dari `1`, maksimal `1610`
+
+
+Variasi
+
+1. Contoh
+
+        https://api.banghasan.com/quran/format/json/catatan/1
+2. Preformat
+
+        https://api.banghasan.com/quran/format/json/catatan/1/pre
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json",
+                "nomor": "1"
+            },
+            "catatan": {
+                "nomor": "1",
+                "teks": "Maksudnya: saya memulai membaca al-Fatihah ini dengan menyebut nama Allah. Setiap pekerjaan yang baik, hendaknya dimulai dengan menyebut asma Allah, seperti makan, minum, menyembelih hewan dan sebagainya. Allah ialah nama zat yang Maha Suci, yang berhak disembah dengan sebenar-benarnya, yang tidak membutuhkan makhluk-Nya, tapi makhluk yang membutuhkan-Nya. Ar Rahmaan (Maha Pemurah): salah satu nama Allah yang memberi pengertian bahwa Allah melimpahkan karunia-Nya kepada makhluk-Nya, sedang ar Rahiim (Maha Penyayang) memberi pengertian bahwa Allah senantiasa bersifat rahmah yang menyebabkan Dia selalu melimpahkan rahmat-Nya kepada makhluk-Nya.\n"
+            }
+        }
+
+## Quran Acak  [/quran/format/{tipe}/acak]
+Berfungsi mendapatkan ayat alQuran secara acak, saat ini baru tersedia secara default adalah 2 bahasa saja.
+Yakni Arabic dan Indonesia.
+
+Untuk mendapatkan bahasa lain, bisa digabungkan bersama tampilkan ayat.
+
+URL: `/quran/format/{tipe}/acak`
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+            
+#### /quran/acak [GET]
+mendapatkan ayat quran secara acak.
+
+kata `acak` bisa diganti dengan `random`
+
+
+Variasi
+
+1. Contoh
+
+        https://api.banghasan.com/quran/format/json/acak
+2. Preformat
+
+        https://api.banghasan.com/quran/format/json/acak/pre
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json"
+            },
+            "acak": {
+                "id": {
+                    "id": "id",
+                    "surat": "8",
+                    "ayat": "29",
+                    "teks": "Hai orang-orang beriman, jika kamu bertaqwa kepada ALlah, Kami akan memberikan kepadamu Furqaan {607}. Dan kami akan jauhkan dirimu dari kesalahan-kesalahanmu, dan mengampuni (dosa-dosa)mu. Dan Allah mempunyai karunia yang besar.\n"
+                },
+                "ar": {
+                    "ID": "1189",
+                    "DatabaseID": "ar",
+                    "SuraID": "8",
+                    "VerseID": "29",
+                    "AyahText": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِنْ تَتَّقُوا اللَّهَ يَجْعَلْ لَكُمْ فُرْقَانًا وَيُكَفِّرْ عَنْكُمْ سَيِّئَاتِكُمْ وَيَغْفِرْ لَكُمْ ۗ وَاللَّهُ ذُو الْفَضْلِ الْعَظِيمِ"
+                }
+            }
+        }
+
+## Group alQuran Kata
+API terkait dengan fungsi-fungsi alQuran per Kata
+
+
+## Group alHadits
+API terkait dengan fungsi-fungsi alHadits
+
+
+## Group Sholat
+API terkait dengan jadwal sholat berdasarkan DEPAG RI
+
+Nama-nama kota dan semua kode berdasarkan situs Kementrian Agama Republik Indonesia
+
+Saat update terakhir dokumen ini diupdate, valid sampai dengan :
+
+    Tanggal Mulai: `2017-01-01`
+    Tanggal Akhir: `2045-12-31`
+    
+Cakupan `511` kota    
+
+### Kode Kota [/sholat/format/{tipe}/kota/kode/{kode}]
+Berfungsi untuk mendapatkan info kode kota tertentu.
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    + kode (number) - kode kota
+    
+#### /kota/kode [GET]
+Variasi
+
+1. Contoh
+
+        https://api.banghasan.com/sholat/format/json/kota/kode/773
+2. Preformat
+
+        https://api.banghasan.com/sholat/format/json/kota/kode/773/pre
+        
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json",
+                "kode": "773"
+            },
+            "kota": [
+                {
+                    "id": "773",
+                    "nama": "KOTA KEDIRI"
+                }
+            ]
+        }
+
+### Nama Kota [/sholat/format/{tipe}/kota/nama/{nama}]
+Berfungsi untuk melakukan pencarian kode kota berdasarkan nama kota.
+
+Dalam satu tempat di Indonesia, ada yang terdapat kota dan kabupaten.
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    + nama (string) - kode kota
+    
+#### /kota/nama [GET]
+Variasi
+
+1. Contoh
+
+        https://api.banghasan.com/sholat/format/json/kota/nama/kediri
+2. Preformat
+
+        https://api.banghasan.com/sholat/format/json/kota/nama/kediri/pre
+        
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json",
+                "nama": "kediri"
+            },
+            "kota": [
+                {
+                    "id": "749",
+                    "nama": "KEDIRI"
+                },
+                {
+                    "id": "773",
+                    "nama": "KOTA KEDIRI"
+                }
+            ]
+        }
+ 
+### Semua Kota [/sholat/format/{tipe}/kota]
+Menampilkan kode semua kota, terdapat 511 buah kota yang terdaftar.
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    
+#### Semua /kota [GET]
+Variasi
+
+1. Contoh
+
+        https://api.banghasan.com/sholat/format/json/kota
+2. Preformat
+
+        https://api.banghasan.com/sholat/format/json/kota/pre
+        
++ Response 200 (application/json)       
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json"
+            },
+            "kota": [
+                {
+                    "id": "512",
+                    "nama": "ACEH BARAT"
+                },
+                {
+                    "id": "513",
+                    "nama": "ACEH BARAT DAYA"
+                },
+                ...
+                ...
+                {
+                    "id": "773",
+                    "nama": "KOTA KEDIRI"
+                }
+            ]
+        }
+
+### Jadwal Sholat [/sholat/format/{tipe}/jadwal/kota/{kota}/tanggal/{tanggal}]
+Menampilkan jadwal sholat secara harian, berdasarkan kota tertentu dan pada tanggal tertentu.
+
+Variabel `kota` berisi kode kota, dan `tanggal` adalah WAJIB diisikan.
+
+Format tanggal: `yyyy-mm-dd`, tahun 4 digit, bulan 2 digit, dan tanggal 2 digit
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    + kota (number) - yakni berisi kode kota
+    + tanggal (string) - format: yyyy-mm-dd, tahun 4 digit, bulan 2 digit, dan tanggal 2 digit
+    
+#### jadwal /kota/tanggal [GET]
+Variasi
+
+1. Menampilkan kota Depok
+
+        https://api.banghasan.com/sholat/format/json/jadwal/kota/703/tanggal/2017-02-07
+2. Preformat
+
+        https://api.banghasan.com/sholat/format/json/jadwal/kota/703/tanggal/2017-02-07/pre
+        
++ Response 200 (application/json)       
+
+        {
+            "status": "ok",
+            "query": {
+                "format": "json",
+                "kota": "703",
+                "tanggal": "2017-02-07"
+            },
+            "jadwal": {
+                "status": "ok",
+                "data": {
+                    "ashar": "15:26",
+                    "dhuha": "06:21",
+                    "dzuhur": "12:10",
+                    "imsak": "04:28",
+                    "isya": "19:31",
+                    "maghrib": "18:20",
+                    "subuh": "04:38",
+                    "tanggal": "Selasa, 07 Feb 2017",
+                    "terbit": "05:54"
+                }
+            }
+        }
+
+## Group Domain
+API untuk segala keperluan dengan domain hosting dan yang terkait. 
+
+### DNS Lookup [/domain/dnslookup/{domain}]
+Mendapatkan informasi tentang DNS suatu domain.
++ Parameters
+    + domain - contoh: banghasan.com 
+    
+#### /dnslookup [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "banghasan.com",
+                "hasil": "banghasan.com. 14400 IN TXT v=spf1 a mx -all
+                            banghasan.com. 14400 IN MX 5 alt1.aspmx.l.google.com.
+                            banghasan.com. 14400 IN MX 5 alt2.aspmx.l.google.com.
+                            banghasan.com. 14400 IN MX 10 aspmx2.googlemail.com.
+                            banghasan.com. 14400 IN MX 10 aspmx3.googlemail.com.
+                            banghasan.com. 14400 IN MX 1 aspmx.l.google.com.
+                            banghasan.com. 86400 IN SOA dns1.superhostservice.net. admin.superhostservice.net. 2016072201 3600 600 1209600 10800
+                            banghasan.com. 86400 IN NS dns2.superhostservice.net.
+                            banghasan.com. 86400 IN NS dns1.superhostservice.net.
+                            banghasan.com. 14400 IN A 198.24.130.195"
+            }
+        ]
+        
+### GeoIP [/domain/geoip/{ip}]
+Mendapatkan informasi tentang lokasi sebuah IP
++ Parameters
+    + ip - ip, contoh: 36.84.13.197 
+    
+#### /geoip [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "36.84.13.197",
+                "hasil": "IP Address: 36.84.13.197
+                            Country: ID
+                            State: Jawa Barat
+                            City: Bogor
+                            Latitude: -6.594400
+                            Longitude: 106.789200"
+            }
+        ]
+
+### Host [/domain/hostsearch/{domain}]
+Mendapatkan informasi IP Hosting sebuah domain
++ Parameters
+    + domain - contoh: detik.com
+    
+#### /hostsearch [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "detik.com",
+                "hasil": "detik.com,203.190.242.69
+                            aumpaperless.webs.detik.com,203.190.243.213
+                            finance.detik.com,203.190.241.88
+                            finance.detik.com,203.190.242.216
+                            food.detik.com,203.190.241.30
+                            food.detik.com,203.190.242.20
+                            images.detik.com,203.190.241.166
+                            images.detik.com,203.190.242.68
+                            oto.detik.com,203.190.241.2
+                            oto.detik.com,203.190.242.212
+                            solusiukm.detik.com,203.190.241.134
+                            solusiukm.detik.com,203.190.242.108
+                            sport.detik.com,203.190.241.48
+                            sport.detik.com,203.190.242.218"
+            }
+        ]
+
+
+
+### Ping [/domain/nping/{host}]
+Ping host dengan menggunakan nping.
++ Parameters
+    + host - dapat berupa ip atau host domain, contoh: 36.84.13.197 atau banghasan.com 
+    
+#### /nping [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "banghasan.com",
+                "hasil": "Starting Nping 0.7.01 ( https://nmap.org/nping ) at 2016-07-25 10:12 CDT
+                            SENT (0.7693s) ICMP [173.255.237.120 > 198.24.130.195 Echo request (type=8/code=0) id=31253 seq=1] IP [ttl=64 id=32256 iplen=28 ]
+                            RCVD (0.8385s) ICMP [198.24.130.195 > 173.255.237.120 Echo reply (type=0/code=0) id=31253 seq=1] IP [ttl=55 id=53953 iplen=28 ]
+                            ... dst"
+            }
+        ]
+        
+### SubNet [/domain/subnetcalc/{ip}/{sub}]
+Kalkulator yang berfungsi menghitung subnet suatu IP
++ Parameters
+    + ip - contoh: 192.168.1.1
+    + sub (number) - contoh 24
+    
+#### /subnetcalc [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "192.168.1.1/24",
+                "hasil": "Address = 192.168.1.1
+                            Network       = 192.168.1.0 / 24
+                            Netmask       = 255.255.255.0
+                            Broadcast     = 192.168.1.255
+                            Wildcard Mask = 0.0.0.255
+                            Hosts Bits    = 8
+                            Max. Hosts    = 254   (2^8 - 2)
+                            Host Range    = { 192.168.1.1 - 192.168.1.254 }"
+            }
+        ]
+        
+### Whois [/domain/whois/{domain}]
+Melihat *whois* suatu domain, status, kepemilikan, dan lain sebagainya.
++ Parameters
+    + domain - nama domain, contoh: detik.com
+    
+#### /whois [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "ok",
+                "query": "detik.com",
+                "hasil": "Whois Server Version 2.0
+                            Domain names in the .com and .net domains can now be registered
+                            with many different competing registrars. Go to http://www.internic.net
+                            for detailed information.
+                            Domain Name: DETIK.COM
+                            Registrar: NETWORK SOLUTIONS, LLC.
+                            Sponsoring Registrar IANA ID: 2
+                            Whois Server: whois.networksolutions.com
+                            Referral URL: http://networksolutions.com
+                            Name Server: NS.DETIK.COM
+                            Name Server: NS.DETIK.NET.ID
+                            Name Server: NS1.DETIK.COM
+                            Name Server: NS1.DETIK.NET.ID
+                            Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+                            Updated Date: 20-may-2016
+                            Creation Date: 29-may-1998
+                            Expiration Date: 28-may-2018
+                            >>> Last update of whois database: Mon, 25 Jul 2016 15:08:49 GMT <<<
+                            ... dst"
+            }
+        ]
+        
+## Group Lain-lain
+API lainnya
+
+### API Versi [/versi/format/{tipe}]
+Informasi versi API terkini
++ Parameters
+    + tipe
+    Tipe format output dalam JSON atau ARRAY
+    Yang valid menggunakan huruf kecil semua.
+        + Members
+            + `json`
+            + `array`
+    
+#### /versi [GET]
+
+1. Simple: `https://api.banghasan.com/versi`
+
+2. Format: `https://api.banghasan.com/versi/format/json`
+
+3. Preformat: `https://api.banghasan.comversi/format/json/pre`
+
+
++ Response 200 (application/json) 
+
+        {
+            "status": "ok",
+            "nama": "Api Fathimah",
+            "versi": "0.02a",
+            "update": "1 Agustus 2016 11:05",
+            "log": [
+                {
+                    "versi": "0.02a",
+                    "waktu": "1 Agustus 2016 11:05",
+                    "data": [
+                        "+ quran surat",
+                        "+ quran bahasa",
+                        "+ quran ayat",
+                        "+ quran cari"
+                    ]
+                },
+                {
+                    "versi": "0.01a",
+                    "waktu": "23 Juli 2016",
+                    "data": [
+                        "+ inisiasi awal",
+                        "+ domain tools",
+                        "+ start doc apiary"
+                    ]
+                }
+            ]
+        }
