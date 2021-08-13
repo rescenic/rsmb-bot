@@ -3,7 +3,7 @@
 ## Telegram Bot for RS Muhammmadiyah Bandung
 
 **Bot Link: https://t.me/rsmb_id_bot**</br>
-**Bot Version: 3.8**
+**Bot Version: 3.9**
 
 ## Author
 
@@ -17,5 +17,5 @@
 
 ## Source Code
 
-**Donate me if you want it.**</br>
+**Donate me if you want the full source code and the guide to deploy the bot.**</br>
 **Contact me: https://j.mp/donasi-bot**
