@@ -305,7 +305,7 @@ function prosesPesan(update) {
                 let keyboard = [
                     [
                         { text: "💵 Shodaqoh", callback_data: "me_say" },
-                        { text: "🥷 Rescenic", callback_data: "me_click" },
+                        { text: "🐱‍👤 Rescenic", callback_data: "me_click" },
                     ],
                     [{ text: "🌐 rescenic.xyz", url: "https://rescenic.xyz" }],
                 ];
