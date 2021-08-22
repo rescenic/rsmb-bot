@@ -1,40 +1,65 @@
 import "google-apps-script";
 
-// masukkan TOKEN BOT dari BOT Father
-const token = "TOKEN_BOT";
+// 00. -- permulaan aplikasi
+// inisasi pertama kali
+var tg = new telegram.daftar();
 
-const tg = new telegram.daftar(token);
+// variable user untuk interaksi dengan store user properties
+var user = new telegram.user();
 
-// masukkan ID kamu, jika belum tau cek di @strukturbot
-const adminBot = 123456789;
+// variable penampung username bot
+// misal: var usernamebot = 'gedebugbot';
+var usernamebot = "rsmb_id_bot";
 
-// jika debug true, akan mengirimkan struktur JSON ke admin bot
-const debug = false;
+// 02. -- Pengambilan dan pemasangan token
+var token = user.getValue("token_" + usernamebot);
+tg.setToken(token);
 
-// -- fungsi telegram
-
-// cek informasi bot
-function getMe() {
-    let me = tg.getMe();
-    return Logger.log(me);
-}
-
+// 03. -- setWebhook
 function setWebhook() {
     var url = "URL_WEBHOOK";
     var r = tg.setWebhook(url);
-    return Logger.log(r);
+    Logger.log(r);
+}
+
+// -- fungsi pengayaan aja, boleh ada boleh tidak
+
+// cek Token berhasil disimpan atau tidak
+function cekToken() {
+    var r = user.getValue("token_" + usernamebot);
+    if (r) {
+        var pesan = "Token sudah disimpan: " + r;
+    } else {
+        var pesan = "Token gagal di simpan.";
+    }
+    Logger.log(pesan);
+    return r;
+}
+
+// cek informasi bot
+function getMe() {
+    var me = tg.getMe();
+    Logger.log(me);
+    return me;
 }
 
 // cek info hook bot
 function getWebhookInfo() {
-    let hasil = tg.getWebhookInfo();
-    return Logger.log(hasil);
+    var r = tg.getWebhookInfo();
+    Logger.log(r);
+    return r;
 }
 
 // hapus hook
 function deleteWebhook() {
-    let hasil = tg.deleteWebhook();
-    return Logger.log(hasil);
+    var r = tg.deleteWebhook();
+    Logger.log(r);
+    return r;
 }
+
+// list Global adminBot
+var adminBot = [
+    162953862, // @rescenic
+];
 
 // -- kalau mau bikin fungsi sendiri, taruh di bawah sini ---

@@ -8,25 +8,97 @@ function doGet(e) {
 // fungsi buat handle pesan POST
 function doPost(e) {
     // data e kita verifikasi
-    let update = tg.doPost(e);
+    var update = tg.doPost(e);
 
-    try {
-        if (debug)
-            return tg.sendMessage(adminBot, JSON.stringify(update, null, 2));
+    // jika data valid proses pesan
+    if (update) {
         prosesPesan(update);
-    } catch (e) {
-        tg.sendMessage(adminBot, e.message);
     }
 }
 
 // fungsi utama untuk memproses segala pesan yang masuk
 function prosesPesan(update) {
-    // deteksi tipe message
+    //return tg.util.outputText("Data diterima di proses Pesan!");
+
+    // detek klo ada pesan dari user
     if (update.message) {
         // penyederhanaan variable
         var msg = update.message;
 
         // deteksi event letakkan di sini
+
+        // SET-EVENT-WELCOME-AWAL
+        // EVENT NEW USER dan SAY WELCOME BOT
+
+        if (msg.new_chat_members) {
+            // return tg.sendMsg(msg, tg.util.outToJSON(msg));
+
+            // variable baru untuk new chat member, ambil yang pertama saja
+            var newUser = msg.new_chat_members[0];
+
+            // mendefinisikan {nama}
+            var namaUser = newUser.first_name;
+            // jika punya last name, kita tambahkan juga
+            if (newUser.last_name) namaUser += " " + newUser.last_name;
+
+            // bersihkan nama dari tag HTML
+            namaUser = tg.util.clearHTML(namaUser);
+
+            // mendifiniksan username
+            var username = newUser.username ? "@" + newUser.username : "";
+
+            // mendifinisikan iduser
+            var idUser = newUser.id;
+
+            // mendefinisikan grup title
+            var namaGrup = msg.chat.title;
+
+            // bersihkan nama grup dari tag HTML
+            namaGrup = tg.util.clearHTML(namaGrup);
+
+            // mendefinisikan id grup
+            var idGrup = msg.chat.id;
+
+            // Merangkai ucapan selamatnya digabung variable ke pesanWelcome
+            // ambil dulu pesan di database User
+            var pesanWelcome = user.getValue("welcomeMessage" + msg.chat.id);
+
+            // jika tidak ada pesan welcome, ya udah balik aja
+            if (!pesanWelcome) return false;
+
+            // ambil button di database User
+            var keyboard = user.getValue("welcomeMessageButton" + msg.chat.id);
+
+            // masukkan variable-variablenya
+            var teks = pesanWelcome
+                .replace(/{nam[ae]}/gi, namaUser) // mengubah template nama, name
+                .replace(/{username}/gi, username) // mengubah template username
+                .replace(/{iduser}/gi, idUser) // mengubah template id user
+                .replace(/{gro?up}/gi, namaGrup) // mengubah template title group
+                .replace(/{idgro?up}/gi, idGrup); // mengubah template id group
+
+            // kirim pesan welcome
+
+            // jika terdapat keyboard
+            if (keyboard) {
+                // parsing ke format yang semestinya
+                keyboard = JSON.parse(keyboard);
+
+                // kirim dalam inline button
+                return tg.sendMsgKeyboardInline(
+                    msg,
+                    teks,
+                    keyboard,
+                    "HTML",
+                    false,
+                    msg.message_id
+                );
+            }
+
+            // jika jenisnya biasa
+            return tg.sendMsg(msg, teks, "HTML");
+        }
+        // SET-EVENT-WELCOME-AKHIR
 
         // jika ada pesan berupa text
         if (msg.text) {
@@ -374,6 +446,341 @@ function prosesPesan(update) {
             if (pola.exec(msg.text)) {
                 var pesanTag = tagList();
                 return tg.kirimPesan(msg.chat.id, pesanTag);
+            }
+            //CUSTOM-WELCOME-AWAL
+            // trigger set Welcome
+            var pola = /^([!\/]setwelcome )/i;
+            if ((cocok = pola.exec(msg.text))) {
+                // periksa dulu user ID nya, jika tidak ada akses tolak saja.
+                if (!tg.util.punyaAkses(adminBot, msg.from.id))
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Kamu tidak punya akses.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // buang pola yang di dapatkan dengan menggantinya dengan karakter kosong atau tidak ada
+                var pesanWelcome = msg.text.replace(cocok[1], "");
+
+                // uji dulu pesan yang diset bener atau enggak dalam format html :
+
+                try {
+                    // kirim pesan berhasil disimpan
+                    tg.sendMsg(
+                        msg,
+                        "✅ <b>WELCOME</b>: " + pesanWelcome,
+                        "HTML",
+                        false,
+                        msg.message_id
+                    );
+
+                    // simpan pesanWelcome
+                    user.setValue("welcomeMessage" + msg.chat.id, pesanWelcome);
+                } catch (e) {
+                    // jika gagal, keluarkan pesan error
+                    var pesanError = e.message;
+
+                    // tangkep pesan error yang dari Telegram saja
+                    if ((error = /({(?:.*)})/gim.exec(pesanError)))
+                        pesanError = error[1];
+
+                    // kalau Error gak usah di format HTML, buat keperluan debugging
+                    tg.sendMsg(
+                        msg,
+                        "⛔️ ERROR: " + pesanError,
+                        false,
+                        false,
+                        msg.message_id
+                    );
+                }
+
+                // selesai kecocokan pola, kembalikan
+                return;
+            }
+
+            // trigger cek Welcome
+            var pola = /^[!\/]cekwelcome$/i;
+            if ((cocok = pola.exec(msg.text))) {
+                // periksa dulu user ID nya, jika tidak ada akses tolak saja.
+                if (!tg.util.punyaAkses(adminBot, msg.from.id))
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Kamu tidak punya akses.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // buang pola yang di dapatkan dengan menggantinya dengan karakter kosong atau tidak ada
+                var pesanWelcome = user.getValue(
+                    "welcomeMessage" + msg.chat.id
+                );
+
+                // jika kosong variablenya
+                if (!pesanWelcome)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Tidak ada welcome.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // kirim pesan welcome:
+                return tg.sendMsg(
+                    msg,
+                    "🗣 WELCOME: " + pesanWelcome,
+                    "HTML",
+                    false,
+                    msg.message_id
+                );
+            }
+
+            // trigger reply set Welcome
+            var pola = /^[!\/]setwelcome$/i;
+            if ((cocok = pola.exec(msg.text))) {
+                // periksa dulu user ID nya, jika tidak ada akses tolak saja.
+                if (!tg.util.punyaAkses(adminBot, msg.from.id))
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Kamu tidak punya akses.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // periksa ada reply atau tidak
+                if (!msg.reply_to_message)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Harus reply pesan",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // sederhanakan variable reply_to_message
+                var msgr = msg.reply_to_message;
+
+                // periksa lagi, yang di reply text atau bukan
+                if (!msgr.text)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Harus tipe teks",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // set up message yang akan di olah
+                var pesanWelcome = msgr.text;
+
+                // uji dulu pesan yang diset bener atau enggak dalam format html :
+
+                try {
+                    // kirim pesan berhasil disimpan
+                    tg.sendMsg(
+                        msg,
+                        "✅ <b>WELCOME</b>: " + pesanWelcome,
+                        "HTML",
+                        false,
+                        msg.message_id
+                    );
+
+                    // simpan pesanWelcome
+                    user.setValue("welcomeMessage" + msg.chat.id, pesanWelcome);
+                } catch (e) {
+                    // jika gagal, keluarkan pesan error
+                    var pesanError = e.message;
+
+                    // tangkep pesan error yang dari Telegram saja
+                    if ((error = /({(?:.*)})/gim.exec(pesanError)))
+                        pesanError = error[1];
+
+                    // kalau Error gak usah di format HTML, buat keperluan debugging
+                    tg.sendMsg(
+                        msg,
+                        "⛔️ ERROR: " + pesanError,
+                        false,
+                        false,
+                        msg.message_id
+                    );
+                }
+
+                // selesai kecocokan pola, kembalikan
+                return;
+            }
+
+            // trigger untuk button Welcome
+            // level: advance
+
+            /* syntax: !buttonWelcome jmlKolomButton SYNTAX_URL
+  
+   jmlKolomButton banyaknya kolom dalam 1 baris: button1, button2
+   SYNTAX_URL format markdown [title](URL)
+   
+   URL protocol yang benar (http/https).
+   
+   SYNTAX_URL dipisahkan apa aja, boleh spasi, ENTER, koma, dlsb
+*/
+            var pola = /^[!\/]buttonWelcome (\d+)/i;
+            if ((cocok = pola.exec(msg.text))) {
+                // periksa dulu user ID nya, jika tidak ada akses tolak saja.
+                if (!tg.util.punyaAkses(adminBot, msg.from.id))
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Kamu tidak punya akses.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // periksa ada reply atau tidak, keluarkan pesan error
+                if (!msg.reply_to_message)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Harus reply pesan.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // sederhanakan variable reply_to_message
+                var msgr = msg.reply_to_message;
+
+                // periksa lagi, yang di reply text atau bukan
+                if (!msgr.text)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Harus bertipe text.",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // set up message yang akan di olah
+                var pesanWelcome = msgr.text;
+
+                // sekarang kita parsing button nya
+                // jangan kebalik ya, yang diparsing adalah msg biasa, bukan msgr (messsage reply)
+                var pesanButton = msg.text;
+
+                // sanitasi: ubah ke Integer
+                var jmlKolomButton = parseInt(cocok[1]);
+
+                // periksa berapa nilainya, jika 0 batalin aja
+                if (jmlKolomButton < 1)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Minimal 1",
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // kasih batas maksimal aja juga, terserah berapa sepantasnya
+                // di sini aku kasih 5 aja
+                var jmlMaxKolomButton = 5;
+                if (jmlKolomButton > jmlMaxKolomButton)
+                    return tg.sendMsg(
+                        msg,
+                        "🚫 Maksimal " + jmlMaxKolomButton,
+                        false,
+                        false,
+                        msg.message_id
+                    );
+
+                // proses pembuatan / penyusunan button
+                // dipahami sendiri ya, ini rumit bagi yang baru memulai. Makanya level nya advance
+
+                // pola button
+                var polaButton =
+                    /\[(?<judul>[^\]]+)\]\((?<url>https?:\/\/[^\)]+)\)/gim;
+
+                // buat variable pendukung
+                var keyboard = [];
+                var baris = [];
+                var nBaris = 0;
+                var kolom = [];
+                var nKolom = 0;
+
+                // proses penyusunan
+                while ((cocokButton = polaButton.exec(pesanButton))) {
+                    // buat 1 button di variable button
+                    tombol = tg.button.url(
+                        cocokButton.groups.judul,
+                        cocokButton.groups.url
+                    );
+
+                    // susun dalam baris
+                    baris.push(tombol);
+
+                    // tambah index button kolom
+                    nKolom++;
+
+                    // jika index button kolom sesuai jmlKolomButton
+                    if (nKolom == jmlKolomButton) {
+                        // masukkan ke dalam susunan keyboard
+                        keyboard[[nBaris][0]] = baris;
+
+                        // tambahkan index baris / row keyboardnya
+                        nBaris++;
+
+                        // reset index kolom dan baris
+                        nKolom = 0;
+                        baris = [];
+                    }
+                }
+
+                // sisa baris yang tidak diakomodir, masukkan di baris paling akhir
+                if (nKolom > 0) keyboard[[nBaris][0]] = baris;
+
+                // keyboard udah jadi, tinggal di coba send
+
+                // uji dulu pesan yang diset bener atau enggak dalam format html
+                // verifikasi text dan keyboad
+
+                try {
+                    // kirim pesan berhasil disimpan
+                    // syntax lib 2 API: sendMsgKeyboardInline(msg, text, keyboard, parse_mode, disable_web_page_preview, reply_to_message_id)
+                    tg.sendMsgKeyboardInline(
+                        msg,
+                        pesanWelcome,
+                        keyboard,
+                        "HTML",
+                        false,
+                        msg.message_id
+                    );
+
+                    // simpan pesanWelcome
+                    user.setValue("welcomeMessage" + msg.chat.id, pesanWelcome);
+                    // simpan buttonnya juga, bentuk string
+                    user.setValue(
+                        "welcomeMessageButton" + msg.chat.id,
+                        JSON.stringify(keyboard)
+                    );
+                } catch (e) {
+                    // jika gagal, keluarkan pesan error
+                    var pesanError = e.message;
+
+                    // tangkep pesan error yang dari Telegram saja
+                    if ((error = /({(?:.*)})/gim.exec(pesanError)))
+                        pesanError = error[1];
+
+                    // kalau Error gak usah di format HTML, buat keperluan debugging
+                    tg.sendMsg(
+                        msg,
+                        "⛔️ ERROR: " + pesanError,
+                        false,
+                        false,
+                        msg.message_id
+                    );
+                }
+
+                // selesai kecocokan pola, kembalikan
+                return;
             }
 
             // Akhir deteksi pesan text
