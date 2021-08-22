@@ -1,12 +1,12 @@
 import "google-apps-script";
 
 // masukkan TOKEN BOT dari BOT Father
-const token = "1872915277:AAFZ8kIMFnzm_UZzvS5seo4oRW1anjeEO3A";
+const token = "TOKEN_BOT";
 
 const tg = new telegram.daftar(token);
 
 // masukkan ID kamu, jika belum tau cek di @strukturbot
-const adminBot = 162953862;
+const adminBot = 123456789;
 
 // jika debug true, akan mengirimkan struktur JSON ke admin bot
 const debug = false;
@@ -20,8 +20,7 @@ function getMe() {
 }
 
 function setWebhook() {
-    var url =
-        "https://script.google.com/macros/s/AKfycbyaq0jI2ngtH2ayVwSpgad7ZvAz-djAWxNX6bvabJwRMkR9b2g/exec";
+    var url = "URL_WEBHOOK";
     var r = tg.setWebhook(url);
     return Logger.log(r);
 }
