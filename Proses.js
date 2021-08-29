@@ -372,7 +372,7 @@ function prosesPesan(update) {
 
             if (/^😎 Author$/i.exec(msg.text)) {
                 let pesan =
-                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>9 Dzulhijjah 1442H / 19 Juli 2021.</b>";
+                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>15 Muharram 1443 H / 23 Agustus 2021.</b>";
 
                 let keyboard = [
                     [
