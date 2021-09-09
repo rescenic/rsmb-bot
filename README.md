@@ -3,7 +3,7 @@
 ## Telegram Bot for RS Muhammmadiyah Bandung
 
 **Bot Link: https://t.me/rsmb_id_bot**</br>
-**Bot Version: 4.1**
+**Bot Version: 4.9**
 
 ## Author
 
