@@ -262,7 +262,7 @@ function prosesPesan(update) {
             var pola = /^[\/!]jadwal(@rsmb_id_bot)?|📜 Jadwal Realtime$/i;
             if ((cocok = pola.exec(msg.text))) {
                 var url =
-                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/Jadwal%20Dokter%20Oktober%202021.jpg";
+                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/Jadwal%20Dokter%20November%202021.jpeg";
                 var caption =
                     "<b>Jadwal Dokter November 2021 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
                 return tg.sendPhoto(msg.chat.id, url, caption, "HTML");
