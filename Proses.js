@@ -264,7 +264,7 @@ function prosesPesan(update) {
                 var url =
                     "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/assets/images/Jadwal%20Dokter%20Desember%202021.jpg";
                 var caption =
-                    "<b>Jadwal Dokter Desember 2021 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
+                    "<b>Jadwal Dokter Mei 2022 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
                 return tg.sendPhoto(msg.chat.id, url, caption, "HTML");
             }
 
@@ -372,7 +372,7 @@ function prosesPesan(update) {
 
             if (/^😎 Author$/i.exec(msg.text)) {
                 let pesan =
-                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>27 Rabiul Akhir 1443 H / 2 Desember 2021.</b>";
+                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>26 Mei 2022.</b>";
 
                 let keyboard = [
                     [
