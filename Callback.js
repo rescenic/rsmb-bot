@@ -3,8 +3,8 @@ import "google-apps-script";
 function prosesCallback(cb) {
     if (/me_click/i.exec(cb.data)) {
         var pesan = "<b>Author: Muhammad Ridwan Hakim, S.T.</b>";
-        pesan += "\n<b>Website: https://rescenic.xyz</b>";
-        pesan += "\n<b>Version: 5.5</b>";
+        pesan += "\n<b>Website: https://rescenic.my.id</b>";
+        pesan += "\n<b>Version: 5.6</b>";
         pesan += "\n<b>Credits:</b>";
         pesan += "\n<b>GAS Libraries v23</b>";
         pesan += "\n<b>Feedback Sahabat RSMB</b>";

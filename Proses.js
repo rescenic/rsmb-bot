@@ -262,9 +262,9 @@ function prosesPesan(update) {
             var pola = /^[\/!]jadwal(@rsmb_id_bot)?|📜 Jadwal Realtime$/i;
             if ((cocok = pola.exec(msg.text))) {
                 var url =
-                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/assets/images/Jadwal%20Dokter%2016%20Juli%202022.jpeg";
+                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/assets/images/Jadwal%20Dokter%20Agustus%202022.jpg";
                 var caption =
-                    "<b>Jadwal Dokter per 16 Juli 2022 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
+                    "<b>Jadwal Dokter per Agustus 2022 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
                 return tg.sendPhoto(msg.chat.id, url, caption, "HTML");
             }
 
@@ -372,14 +372,19 @@ function prosesPesan(update) {
 
             if (/^😎 Author$/i.exec(msg.text)) {
                 let pesan =
-                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>26 Juli 2022.</b>";
+                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>16 Agustus 2022.</b>";
 
                 let keyboard = [
                     [
                         { text: "💵 Shodaqoh", callback_data: "me_say" },
                         { text: "🦸‍♂️ Rescenic", callback_data: "me_click" },
                     ],
-                    [{ text: "🌐 rescenic.xyz", url: "https://rescenic.xyz" }],
+                    [
+                        {
+                            text: "🌐 rescenic.my.id",
+                            url: "https://rescenic.my.id",
+                        },
+                    ],
                 ];
                 return sendMsgKeyboardInline(msg.chat.id, pesan, keyboard);
             }
