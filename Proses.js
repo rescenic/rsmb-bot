@@ -262,9 +262,9 @@ function prosesPesan(update) {
             var pola = /^[\/!]jadwal(@rsmb_id_bot)?|📜 Jadwal Realtime$/i;
             if ((cocok = pola.exec(msg.text))) {
                 var url =
-                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/assets/images/Jadwal%20Dokter%20September%202022.jpg";
+                    "https://raw.githubusercontent.com/rescenic/rsmb-bot/master/assets/images/Jadwal%20Dokter%20Oktober%202022%20v2.jpeg";
                 var caption =
-                    "<b>Jadwal Dokter September 2022 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
+                    "<b>Jadwal Dokter Oktober 2022 dan Versi Realtime H-1 di https://j.mp/jadwal-dokter-rsmb</b>";
                 return tg.sendPhoto(msg.chat.id, url, caption, "HTML");
             }
 
@@ -372,7 +372,7 @@ function prosesPesan(update) {
 
             if (/^😎 Author$/i.exec(msg.text)) {
                 let pesan =
-                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>19 September 2022.</b>";
+                    "🧕 <b>Customer Self-Service Bot</b>\n<b>🏥 RS Muhammadiyah Bandung</b>\n<b>oleh <a href='https://t.me/rescenic'>Muhammad Ridwan Hakim, S.T.</a></b>\n<b>9 Oktober 2022.</b>";
 
                 let keyboard = [
                     [
