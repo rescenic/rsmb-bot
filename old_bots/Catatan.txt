@@ -1,0 +1,21 @@
+Untuk menambahkan catatan ke dalam bot, bisa dilakukan dengan perintah:
+```
+/+tag #catatan1 Ini contoh catatan
+```
+Untuk mengupdate catatan di dalam bot, bisa dilakukan dengan perintah:
+```
+/+tag #catatan1 Ini contoh catatan yang diupdate
+```
+Untuk menghapus catatan di dalam bot, bisa dilakukan dengan perintah:
+```
+/-tag #catatan1
+```
+Untuk memanggil catatan di dalam bot, cukup mereply pesan atau mengetik pesan dengan diawali tanda #.
+```
+#catatan1
+```
+Untuk melihat list catatan di dalam bot, bisa dilakukan dengan perintah: 
+/tags@rsmb_id_bot atau /tags
+
+Catatan bot disimpan di:
+j.mp/rsmb-tags-excel
