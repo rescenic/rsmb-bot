@@ -73,19 +73,23 @@ bot.cmd("start", (ctx) => {
 });
 
 // Ping command handler
-bot.cmd("ping", (ctx) => {
-  const waktuAwal = ctx.message.date;
+bot.cmd("ping", (ctx, next) => {
+  let time_start = Date.now();
+  let res = ctx.replyIt("..pong!");
+  let time_stop = Date.now();
 
-  ctx.replyWithHTML("<b>Pooong</b>").then((sentMsg) => {
-    const waktuAkhir = new Date() / 1000;
-    const selisihWaktu = waktuAkhir - waktuAwal;
+  let time_delta = (time_stop - time_start) / 1000;
+  let time = new Intl.NumberFormat("id").format(time_delta);
 
-    const pesan = `<b>Kecepatan reaksi bot <code>${selisihWaktu.toLocaleString()}</code> detik.</b>`;
+  let msg_id = res.result.message_id;
 
-    bot.telegram.editMessageText(ctx.chat.id, sentMsg.message_id, null, pesan, {
-      parse_mode: "HTML",
-    });
-  });
+  bot.telegram.editMessageText(
+    ctx.chat.id,
+    msg_id,
+    null,
+    `<b>Pong!</b> Waktu reaksi bot: <code>${time}</code> detik.`,
+    { parse_mode: "html" }
+  );
 });
 
 // Pong command handler
@@ -420,7 +424,7 @@ bot.on("callback_query", (ctx) => {
     // Send detailed message as in the original code
     let pesan = "<b>Author: Muhammad Ridwan Hakim, S.T.</b>";
     pesan += "\n<b>Website: https://rescenic.my.id</b>";
-    pesan += "\n<b>Version: 6.0</b>";
+    pesan += "\n<b>Version: 6.1</b>";
     pesan += "\n<b>Credits:</b>";
     pesan += "\n<b>Lumpia Library v10</b>";
     pesan += "\n<b>Feedback Sahabat RSMB</b>";
